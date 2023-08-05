@@ -1,3 +1,4 @@
+let interval
 const timer = {
   pomodoro: 25,
   shortBreak: 5,
@@ -6,12 +7,50 @@ const timer = {
 }
 
 // detects a click on buttons mode
+const mainButton = document.querySelector('#js-btn')
+mainButton.addEventListener('click', function () {
+  const { action } = mainButton.dataset
+  if (action === 'start') {
+    startTimer()
+  }
+})
 const modeButtons = document.querySelector('#js-mode-buttons')
 modeButtons.addEventListener('click', handleMode)
-function handleMode (e) {
-  const { mode } = e.target.dataset
-  if (!mode) return
-  switchMode(mode)
+
+function getRemainingTime (endTime) {
+  const currentTime = Date.parse(new Date())
+  const difference = endTime - currentTime
+
+  // compute the total number of seconds left by dividing by 1000
+  const total = Number.parseInt(difference / 1000, 10)
+  // The minutes variable contains the number of whole minutes left (if any)
+  const minutes = Number.parseInt((total / 60) % 60, 10)
+  // the number of seconds left after whole minutes have been accounted for
+  // for example if total = 230 = 3 minutes & 50 seconds
+  const seconds = Number.parseInt(total % 60, 10)
+  return {
+    total,
+    minutes,
+    seconds
+  }
+}
+
+function startTimer () {
+  let { total } = timer.remainingTime
+  // get the exact time in the future when the timer will end
+  const endTime = Date.parse(new Date()) + total * 1000
+  mainButton.dataset.action = 'stop'
+  mainButton.textContent = 'stop'
+  mainButton.classList.add('active')
+  interval = setInterval(function () {
+    timer.remainingTime = getRemainingTime(endTime)
+    updateClock()
+
+    total = timer.remainingTime.total
+    if (total <= 0) {
+      clearInterval(interval)
+    }
+  }, 1000)
 }
 
 function updateClock () {
@@ -21,8 +60,6 @@ function updateClock () {
   const seconds = `${remainingTime.seconds}`.padStart(2, '0')
   document.querySelector('#js-minutes').textContent = minutes
   document.querySelector('#js-seconds').textContent = seconds
-  console.log(minutes)
-  console.log(seconds)
 }
 
 function switchMode (mode) {
@@ -41,3 +78,14 @@ function switchMode (mode) {
   document.body.style.backgroundColor = `var(--${mode})`
   updateClock()
 }
+
+function handleMode (e) {
+  const { mode } = e.target.dataset
+  if (!mode) return
+  switchMode(mode)
+}
+
+// ensure that the mode and remainingTime properties are set on the timer object on page load
+document.addEventListener('DOMContentLoaded', function(){
+  switchMode('pomodoro')
+})
