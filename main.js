@@ -1,9 +1,10 @@
 let interval
 const timer = {
-  pomodoro: 25,
-  shortBreak: 5,
-  longBreak: 15,
-  longBreakInterval: 4
+  pomodoro: 1,
+  shortBreak: 1,
+  longBreak: 1,
+  longBreakInterval: 4,
+  sessions: 0
 }
 
 // detects a click on buttons mode
@@ -13,7 +14,7 @@ mainButton.addEventListener('click', function () {
   if (action === 'start') {
     startTimer()
   } else {
-    stopTimer();
+    stopTimer()
   }
 })
 const modeButtons = document.querySelector('#js-mode-buttons')
@@ -41,6 +42,8 @@ function startTimer () {
   let { total } = timer.remainingTime
   // get the exact time in the future when the timer will end
   const endTime = Date.parse(new Date()) + total * 1000
+  // sessions property is incremented at the start of a pomodoro session
+  if (timer.mode === 'pomodoro') timer.sessions++
   mainButton.dataset.action = 'stop'
   mainButton.textContent = 'stop'
   mainButton.classList.add('active')
@@ -51,6 +54,20 @@ function startTimer () {
     total = timer.remainingTime.total
     if (total <= 0) {
       clearInterval(interval)
+
+      // auto switch to the next session on completion of the current one
+      switch (timer.mode) {
+        case 'pomodoro':
+          if (timer.sessions % timer.longBreakInterval === 0) {
+            switchMode('longBreak')
+          } else {
+            switchMode('shortBreak')
+          }
+          break
+        default:
+          switchMode('pomodoro')
+      }
+      startTimer()
     }
   }, 1000)
 }
