@@ -12,6 +12,8 @@ mainButton.addEventListener('click', function () {
   const { action } = mainButton.dataset
   if (action === 'start') {
     startTimer()
+  } else {
+    stopTimer();
   }
 })
 const modeButtons = document.querySelector('#js-mode-buttons')
@@ -53,6 +55,13 @@ function startTimer () {
   }, 1000)
 }
 
+function stopTimer () {
+  clearInterval(interval)
+  mainButton.dataset.action = 'start'
+  mainButton.textContent = 'start'
+  mainButton.classList.remove('active')
+}
+
 function updateClock () {
   const { remainingTime } = timer
   //  pads them with zeros where necessary so that the number always has a width of two
@@ -83,9 +92,11 @@ function handleMode (e) {
   const { mode } = e.target.dataset
   if (!mode) return
   switchMode(mode)
+  // stop the timer when the mode is changed by clicking any of the three buttons above the countdown
+  stopTimer()
 }
 
 // ensure that the mode and remainingTime properties are set on the timer object on page load
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function () {
   switchMode('pomodoro')
 })
