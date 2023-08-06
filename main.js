@@ -1,8 +1,8 @@
 let interval
 const timer = {
-  pomodoro: 1,
-  shortBreak: 1,
-  longBreak: 1,
+  pomodoro: 25,
+  shortBreak: 5,
+  longBreak: 15,
   longBreakInterval: 4,
   sessions: 0
 }
@@ -86,6 +86,8 @@ function updateClock () {
   const seconds = `${remainingTime.seconds}`.padStart(2, '0')
   document.querySelector('#js-minutes').textContent = minutes
   document.querySelector('#js-seconds').textContent = seconds
+  const progress = document.getElementById('js-progress')
+  progress.value = timer[timer.mode] * 60 - timer.remainingTime.total
 }
 
 function switchMode (mode) {
@@ -102,6 +104,9 @@ function switchMode (mode) {
   // add 'active' class to the clicked button and change bg color
   document.querySelector(`[data-mode="${mode}"]`).classList.add('active')
   document.body.style.backgroundColor = `var(--${mode})`
+  document
+    .getElementById('js-progress')
+    .setAttribute('max', timer.remainingTime.total)
   updateClock()
 }
 
