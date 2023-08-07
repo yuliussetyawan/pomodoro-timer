@@ -7,9 +7,11 @@ const timer = {
   sessions: 0
 }
 
+const buttonSound = new Audio('button-sound.mp3')
 // detects a click on buttons mode
 const mainButton = document.querySelector('#js-btn')
 mainButton.addEventListener('click', function () {
+  buttonSound.play()
   const { action } = mainButton.dataset
   if (action === 'start') {
     startTimer()
@@ -67,6 +69,7 @@ function startTimer () {
         default:
           switchMode('pomodoro')
       }
+      document.querySelector(`[data-sound="${timer.mode}"]`).play();
       startTimer()
     }
   }, 1000)
@@ -86,7 +89,7 @@ function updateClock () {
   const seconds = `${remainingTime.seconds}`.padStart(2, '0')
   document.querySelector('#js-minutes').textContent = minutes
   document.querySelector('#js-seconds').textContent = seconds
-  const text = timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
+  const text = timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!'
   document.title = `${minutes}:${seconds} - ${text}`
   const progress = document.getElementById('js-progress')
   progress.value = timer[timer.mode] * 60 - timer.remainingTime.total
