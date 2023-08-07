@@ -69,7 +69,12 @@ function startTimer () {
         default:
           switchMode('pomodoro')
       }
-      document.querySelector(`[data-sound="${timer.mode}"]`).play();
+      document.querySelector(`[data-sound="${timer.mode}"]`).play()
+      if (Notification.permission === 'granted') {
+        const text =
+          timer.mode === 'pomodoro' ? 'Get back to work' : 'Take a break'
+        new Notification(text)
+      }
       startTimer()
     }
   }, 1000)
@@ -125,5 +130,24 @@ function handleMode (e) {
 
 // ensure that the mode and remainingTime properties are set on the timer object on page load
 document.addEventListener('DOMContentLoaded', function () {
+  //  Check if the browser supports notifications
+  if ('Notification' in window) {
+    // If notification permissions have neither been granted or denied
+    if (
+      Notification.permission === 'granted' &&
+      Notification.permission !== 'denied'
+    ) {
+      // ask the user for permission
+      Notification.requestPermission().then(function (permission) {
+        // if permission is granted
+        if (permission === 'granted') {
+          // create notification
+          new Notification(
+            'Awesome, you will notified at the start of each session'
+          )
+        }
+      })
+    }
+  }
   switchMode('pomodoro')
 })
