@@ -86,6 +86,8 @@ function updateClock () {
   const seconds = `${remainingTime.seconds}`.padStart(2, '0')
   document.querySelector('#js-minutes').textContent = minutes
   document.querySelector('#js-seconds').textContent = seconds
+  const text = timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
+  document.title = `${minutes}:${seconds} - ${text}`
   const progress = document.getElementById('js-progress')
   progress.value = timer[timer.mode] * 60 - timer.remainingTime.total
 }
