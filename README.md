@@ -1,29 +1,39 @@
-# Pomodoro Timer Starter files
+# Pomodoro Project
 
-Here lies the starter files for the Pomodoro timer tutorial which can be found
-here: https://freshman.tech/pomodoro-timer
+This is a Pomodoro Timer project built using JavaScript with DOM manipulation. The Pomodoro Technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.
 
-## Live demo
+![Pomodoro Timer](./pomodoro.PNG)
 
-The completed version of this project is live at
-https://freshman-pomodoro.surge.sh/
+## Features
 
-## Prerequisites
+- Set customizable work and break durations.
+- Sound notification and browser notification when a timer interval ends.
+- Start and pause the timer.
+- Background indicators for different timer states.
+- Progress bar to visualize the remaining time.
 
-You must have [Node.js](https://nodejs.org/en/download/) and
-[npm](https://www.npmjs.com/get-npm) installed on your machine. This project was
-built against the following versions:
+## Tech Stack
 
-Node v13.13.0
-npm v6.14.5
+- JavaScript
+- HTML
+- CSS
 
-## Get started
+## Usage
 
-Clone this repository to your local machine with:
+1. Clone the repository:
+git clone https://github.com/yuliussetyawan/pomodoro-timer.git
 
-```bash
-$ git clone https://github.com/Freshman-tech/pomodoro-starter-files.git
-```
+2. Open `index.html` in your web browser.
 
-`cd` into the downloaded directory and follow along with the
-[tutorial](https://freshman.tech/pomodoro-timer/).
+3. Click the "Start" button to begin the Pomodoro timer.
+
+## Credits
+
+This project is based on the [Pomodoro Timer tutorial](https://freshman.tech/pomodoro-timer/) by Freshman.tech. I would like to express my gratitude for their valuable resource.
+
+## Contributing
+
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please create an issue or submit a pull request.
+
+
+**Note:** The Pomodoro Technique is a time management method developed by Francesco Cirillo. You can learn more about it at [pomofocus.io](https://pomofocus.io) and [cirillocompany.de/pages/pomodoro-technique](https://cirillocompany.de/pages/pomodoro-technique).
