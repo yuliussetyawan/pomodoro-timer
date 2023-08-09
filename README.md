@@ -2,7 +2,7 @@
 
 This is a Pomodoro Timer project built using JavaScript with DOM manipulation. The Pomodoro Technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.
 
-![Pomodoro Timer](./pomodoro.PNG)
+![Pomodoro Timer](./img/pomodoro.PNG)
 
 ## Features
 
@@ -26,6 +26,11 @@ git clone https://github.com/yuliussetyawan/pomodoro-timer.git
 2. Open `index.html` in your web browser.
 
 3. Click the "Start" button to begin the Pomodoro timer.
+
+## Preview
+
+Check out the live [Pomodoro Timer preview](https://pomodoro-timer-dom.netlify.app).
+
 
 ## Credits
 
